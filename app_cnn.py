@@ -52,7 +52,7 @@ layer_idx_tuple = st.sidebar.selectbox("🔍 Pilih Layer CNN", visual_layers, fo
 layer_idx = layer_idx_tuple[0] # Ambil hanya indeks integer
 
 # Upload gambar hanya JPG
-uploaded_file = st.file_uploader("📤 Upload Gambar Sampah (.jpg saja)", type=["jpg", "jpeg", "png"]) # Izinkan format lain
+uploaded_file = st.file_uploader("📤 Upload Gambar Sampah (.jpg, .jpeg, .png saja)", type=["jpg", "jpeg", "png"]) # Izinkan format lain
 
 if uploaded_file:
     # if not uploaded_file.name.lower().endswith((".jpg", ".jpeg", ".png")):
