@@ -55,11 +55,9 @@ if uploaded_file:
         st.error("❌ Gagal membaca file gambar.")
         st.stop()
 
-    # ✅ Gambar statis: selalu ditampilkan dalam ukuran 300x300
     image_display = image.resize((300, 300))
     st.image(image_display, caption="🖼️ Gambar Diupload (ukuran tetap)", width=300)
 
-    # Preprocessing
     resized = image.resize((224, 224))
     img_array_input = np.array(resized)
     img_array_normalized = img_array_input / 255.0
@@ -68,8 +66,13 @@ if uploaded_file:
     # Prediksi
     pred = model.predict(img_array_expanded)
     pred_class_idx = np.argmax(pred)
-    pred_class = class_names[pred_class_idx]
     conf = np.max(pred)
+
+    threshold = 0.6  # Confidence threshold
+    if conf < threshold:
+        pred_class = "❌ Gambar tidak dikenali sebagai sampah, Coba gambar lain"
+    else:
+        pred_class = class_names[pred_class_idx]
     st.success(f"✅ Prediksi: **{pred_class}** ({conf * 100:.2f}%)")
 
     # Visualisasi feature map
@@ -98,7 +101,6 @@ if uploaded_file:
         plt.tight_layout()
         st.pyplot(fig_grid)
 
-        # 3D Scatter
         if num_channels > 1:
             st.subheader("🌐 3D Scatter Channel")
             ch_idx = st.sidebar.slider("Channel untuk Visualisasi 3D", 0, num_channels - 1, 0)
@@ -112,7 +114,6 @@ if uploaded_file:
             fig_3d.colorbar(sc, shrink=0.5)
             st.pyplot(fig_3d)
 
-        # Heatmap overlay
         st.subheader("🔥 Heatmap Overlay di Gambar Asli (Mean Activation)")
         heatmap = np.mean(feature_map, axis=-1)
         heatmap = np.maximum(heatmap, 0)
