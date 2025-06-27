@@ -70,7 +70,7 @@ if uploaded_file:
 
     threshold = 0.6  # Confidence threshold
     if conf < threshold:
-        pred_class = "❌ Gambar tidak dikenali sebagai sampah, Coba gambar lain"
+        pred_class = "❌Gambar tidak dikenali sebagai sampah, Coba gambar lain"
     else:
         pred_class = class_names[pred_class_idx]
     st.success(f"✅ Prediksi: **{pred_class}** ({conf * 100:.2f}%)")
