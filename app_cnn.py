@@ -68,7 +68,7 @@ if uploaded_file:
     pred_class_idx = np.argmax(pred)
     conf = np.max(pred)
 
-    threshold = 0.6  # Confidence threshold
+    threshold = 0.4  # Confidence threshold
     if conf < threshold:
         pred_class = "❌Gambar tidak dikenali sebagai sampah, Coba gambar lain"
     else:
